@@ -14,8 +14,16 @@ workflows:
           - tag
           - pull_request
       scripts:
+        - name: Update CLI tool
+          script: |
+            pip uninstall --yes codemagic-cli-tools && pip install --upgrade https://github.com/codemagic-ci-cd/cli-tools/archive/refs/heads/master.zip
+
         - name: macOS tests
           script: |
             xcode-project run-tests \
                 --project "$XCODE_PROJECT" \
                 --scheme "$XCODE_SCHEME"
+                --sdk macosx \
+                --test-xcargs "CODE_SIGNING_ALLOWED='no'" \
+                --output-dir build/macos/test
+          test_report: build/macos/test/*.xml
