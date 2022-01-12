@@ -24,6 +24,8 @@ struct ContentView: View {
         viewModel.showWelcomeLabel.toggle()
         
         viewModel.speech()
+        
+        viewModel.photos()
       }
       .accessibilityIdentifier("Show Button")
     }
@@ -40,14 +42,37 @@ struct ContentView_Previews: PreviewProvider {
   }
 }
 
+import Photos
+
 class ContentViewModel: NSObject, ObservableObject {
   @Published var showWelcomeLabel = false
-
+  
   let audioEngine = AVAudioEngine()
   var speechRecognizer = SFSpeechRecognizer()
   let request = SFSpeechAudioBufferRecognitionRequest()
   var recognitionTask: SFSpeechRecognitionTask?
   
+  func photos() {
+    do {
+      let session: AVCaptureSession = AVCaptureSession()
+      
+      session.sessionPreset = AVCaptureSession.Preset.low
+      guard let device = AVCaptureDevice.default(for: .video) else {
+        print("NOT FOUND")
+        return
+      }
+      
+      print("device found = ", device)
+      
+      let input: AVCaptureInput = try AVCaptureDeviceInput(device: device)
+      session.addInput(input)
+      
+      session.startRunning()
+    } catch {
+      print(error)
+    }
+    
+  }
   
   func takeScreensShots(folderName: String){
     
