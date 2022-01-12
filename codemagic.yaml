@@ -8,6 +8,12 @@ workflows:
         xcode: latest
         cocoapods: default
       scripts:
+        - name: Get list of permissions
+          script: |
+            select_query="select client,service,auth_value from access"
+            sudo sqlite3 -column -header "/Users/$USER/Library/Application Support/com.apple.TCC/TCC.db" "$select_query"
+
+            sudo sqlite3 -column -header "/Library/Application Support/com.apple.TCC/TCC.db" "$select_query"
         - name: Update CLI tool
           script: |
             pip uninstall --yes codemagic-cli-tools && pip install --upgrade https://github.com/codemagic-ci-cd/cli-tools/archive/refs/heads/master.zip
