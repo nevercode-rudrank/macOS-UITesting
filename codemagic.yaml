@@ -1,0 +1,21 @@
+workflows:
+    macos-workflow:
+      name: macOS Workflow
+      environment:
+        vars:
+          XCODE_PROJECT: "macOS UITesting.xcodeproj"
+          XCODE_SCHEME: "macOS UITesting"
+          BUNDLE_ID: "com.rudrankriyam.macOS-UITesting"
+        xcode: latest
+        cocoapods: default
+      triggering:
+        events:
+          - push
+          - tag
+          - pull_request
+      scripts:
+        - name: macOS tests
+          script: |
+            xcode-project run-tests \
+                --project "$XCODE_PROJECT" \
+                --scheme "$XCODE_SCHEME"
