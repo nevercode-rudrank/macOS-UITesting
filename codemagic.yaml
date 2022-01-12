@@ -5,14 +5,8 @@ workflows:
         vars:
           XCODE_PROJECT: "macOS UITesting.xcodeproj"
           XCODE_SCHEME: "macOS UITesting"
-          BUNDLE_ID: "com.rudrankriyam.macOS-UITesting"
         xcode: latest
         cocoapods: default
-      triggering:
-        events:
-          - push
-          - tag
-          - pull_request
       scripts:
         - name: Update CLI tool
           script: |
@@ -22,7 +16,7 @@ workflows:
           script: |
             xcode-project run-tests \
                 --project "$XCODE_PROJECT" \
-                --scheme "$XCODE_SCHEME"
+                --scheme "$XCODE_SCHEME" \
                 --sdk macosx \
                 --test-xcargs "CODE_SIGNING_ALLOWED='no'" \
                 --output-dir build/macos/test
