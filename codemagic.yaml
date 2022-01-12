@@ -1,6 +1,7 @@
 workflows:
     macos-workflow:
       name: macOS Workflow
+      max_build_duration: 120 
       environment:
         vars:
           XCODE_PROJECT: "macOS UITesting.xcodeproj"
