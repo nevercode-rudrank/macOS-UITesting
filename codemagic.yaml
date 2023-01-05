@@ -10,6 +10,29 @@ workflows:
         xcode: 13.3
         cocoapods: default
       scripts:
+        - name: Listing currently defined permissions in user database
+          script: | 
+            #!/usr/bin/env bash
+            macos_major_version=$(sw_vers -productVersion | awk -F. '{ print $1 }')
+            
+            if [[ $macos_major_version -le 10 ]]; then
+              select_query="select client,service,allowed from access"
+            else
+              select_query="select client,service,auth_value from access"
+            fi
+            sudo sqlite3 -column -header "/Users/$USER/Library/Application Support/com.apple.TCC/TCC.db" "$select_query"
+        - name: Listing currently defined permissions in system database
+          script: | 
+            #!/usr/bin/env bash
+            macos_major_version=$(sw_vers -productVersion | awk -F. '{ print $1 }')
+            
+            if [[ $macos_major_version -le 10 ]]; then
+              select_query="select client,service,allowed from access"
+            else
+              select_query="select client,service,auth_value from access"
+            fi
+            
+            sudo sqlite3 -column -header "/Library/Application Support/com.apple.TCC/TCC.db" "$select_query"
         - name: List 
           script: | 
             #!/usr/bin/env bash
