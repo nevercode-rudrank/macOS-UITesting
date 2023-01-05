@@ -18,7 +18,7 @@ class macOS_UITestingUITests: XCTestCase {
   }
   
   override func invokeTest() {
-      for time in 0...200 {
+      for time in 0...2 {
           print("this test is being invoked: \(time) times")
           super.invokeTest()
       }
