@@ -7,7 +7,7 @@ workflows:
         vars:
           XCODE_PROJECT: "macOS UITesting.xcodeproj"
           XCODE_SCHEME: "macOS UITesting"
-        xcode: 13.3
+        xcode: 14.2
         cocoapods: default
       scripts:
         - name: Listing currently defined permissions in user database
