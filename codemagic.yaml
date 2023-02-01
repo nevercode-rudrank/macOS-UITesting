@@ -21,6 +21,8 @@ workflows:
               select_query="select client,service,auth_value from access"
             fi
             sudo sqlite3 -column -header "/Users/$USER/Library/Application Support/com.apple.TCC/TCC.db" "$select_query"
+            
+            system_profiler
         - name: Listing currently defined permissions in system database
           script: | 
             #!/usr/bin/env bash
